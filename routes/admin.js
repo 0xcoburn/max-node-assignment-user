@@ -11,7 +11,7 @@ router.get("/add-plane", (req, res, next) => {
 });
 
 router.post("/add-plane", (req, res, next) => {
-  console.log(req.body);
+  console.log(req.body.plane);
   res.redirect("/");
 });
 
