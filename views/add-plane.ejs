@@ -1,0 +1,14 @@
+<%- include('includes/home.ejs') %>
+  <body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <form action="/admin/add-plane" method="POST">
+          <div class="input-block">
+            <label for="add-plane">Add Plane</label>
+            <input type="text" id="add-plane" name="title" />
+          </div>
+          <button type="submit">add</button>
+        </form>
+      </main>
+    </body>
+  </html>

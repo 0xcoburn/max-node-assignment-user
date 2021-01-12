@@ -7,11 +7,11 @@ const rootDir = require("../utils/path");
 const router = express.Router();
 
 router.get("/add-plane", (req, res, next) => {
-  res.sendFile(path.join(rootDir, "views", "add-plane.html"));
+  res.render("home", {});
 });
 
 router.post("/add-plane", (req, res, next) => {
-  console.log(req.body.plane);
+  console.log(req.body.title);
   res.redirect("/");
 });
 
