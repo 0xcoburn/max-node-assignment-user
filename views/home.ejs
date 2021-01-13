@@ -1,15 +1,28 @@
 <%- include('includes/head.ejs') %>
   <body>
     <%- include('includes/nav.ejs') %>
-    <main>
-      <div>
+    <main> 
+        <% if (prods.length > 0) { %>
+        <% for (let product of prods) { %>
+        <article>
+            <header>
+                <h1><%= product.title %></h1>
+            </header>
+            <div>
+                <img src="" alt="plane">
+            </div>
+            <div>
+                <h2>price</h2>
+                <p>description</p>
+            </div>
+            <div>
+                <button>click me</button>
+            </div>
+        </article>
+        <% } %>
+        <% } else { %>
         <h1>Home Page Yo</h1>
-        <ul>
-          <li>Cessna 421</li>
-          <li>Cirrus SR-22</li>
-          <li>Diamond DA-42</li>
-        </ul>
-      </div>
+        <% } %>
     </main>
   </body>
 </html>
