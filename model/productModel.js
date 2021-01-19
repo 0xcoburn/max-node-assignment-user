@@ -7,17 +7,22 @@ const p = path.join(
   "product.json"
 );
 
+function getProductsFromFile(cb) {
+  fs.readFile(p, (err, data) => {
+    if (err) {
+      return cb([]);
+    }
+    return cb(JSON.parse(data));
+  });
+}
+
 class Product {
   constructor(t) {
     this.title = t;
   }
 
   save() {
-    fs.readFile(p, (err, data) => {
-      let products = [];
-      if (!err) {
-        products = JSON.parse(data);
-      }
+    getProductsFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.error(err);
@@ -26,12 +31,7 @@ class Product {
   }
 
   static fetchAll(cb) {
-    fs.readFile(p, (err, data) => {
-      if (err) {
-        return cb([]);
-      }
-      return cb(JSON.parse(data));
-    });
+    getProductsFromFile(cb);
   }
 }
 
