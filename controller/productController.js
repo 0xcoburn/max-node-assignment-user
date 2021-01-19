@@ -1,7 +1,11 @@
-const products = [];
+const fs = require("fs");
+const path = require("path");
+const Product = require("../model/productModel");
 
 exports.getProducts = (req, res, next) => {
-  res.render("home", { prods: products, pageTitle: "home Bitch" });
+  const products = Product.fetchAll((products) => {
+    res.render("home", { prods: products, pageTitle: "home Bitch" });
+  });
 };
 
 exports.getAddProducts = (req, res, next) => {
@@ -9,8 +13,7 @@ exports.getAddProducts = (req, res, next) => {
 };
 
 exports.postAddProducts = (req, res, next) => {
-  console.log(req.body.title);
-  products.push({ title: req.body.title });
-  console.log(products);
+  const product = new Product(req.body.title);
+  product.save();
   res.redirect("/");
 };
