@@ -1,5 +1,5 @@
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs").promises;
 
 const p = path.join(
   path.dirname(require.main.filename),
@@ -7,31 +7,34 @@ const p = path.join(
   "product.json"
 );
 
-function getProductsFromFile(cb) {
-  fs.readFile(p, (err, data) => {
-    if (err) {
-      return cb([]);
-    }
-    return cb(JSON.parse(data));
-  });
-}
-
 class Product {
   constructor(t) {
     this.title = t;
   }
 
-  save() {
-    getProductsFromFile((products) => {
+  async save() {
+    let products;
+    try {
+      let data = await fs.readFile(p);
+      products = JSON.parse(data);
+    } catch {
+      products = [];
+    } finally {
       products.push(this);
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.error(err);
-      });
-    });
+      await fs.writeFile(p, JSON.stringify(products));
+    }
   }
-
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
+  static async fetchAll() {
+    let products;
+    let data;
+    try {
+      data = await fs.readFile(p);
+      products = JSON.parse(data);
+    } catch (err) {
+      products = [];
+    } finally {
+      return products;
+    }
   }
 }
 

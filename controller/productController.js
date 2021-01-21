@@ -2,10 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const Product = require("../model/productModel");
 
-exports.getProducts = (req, res, next) => {
-  const products = Product.fetchAll((products) => {
-    res.render("home", { prods: products, pageTitle: "home Bitch" });
-  });
+exports.getProducts = async (req, res, next) => {
+  const products = await Product.fetchAll();
+  res.render("home", { prods: products, pageTitle: "home Bitch" });
 };
 
 exports.getAddProducts = (req, res, next) => {
